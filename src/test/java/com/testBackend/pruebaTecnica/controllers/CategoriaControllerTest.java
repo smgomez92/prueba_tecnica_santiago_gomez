@@ -44,7 +44,7 @@ public class CategoriaControllerTest {
         Categoria categoria = new Categoria();
         categoria.setCategoryName("CAT-1");
         categoria.setCategoryDescripcion("Categoria Uno");
-        when(categoriaService.saveCategoria(categoria)).thenReturn(12L);
+        when(categoriaService.saveOrUpdateCategory(categoria)).thenReturn(12L);
 
         mockMvc.perform(post("/api/categorias")
                         .content(categoryBody)

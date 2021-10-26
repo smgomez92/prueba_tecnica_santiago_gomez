@@ -27,7 +27,7 @@ public class CategoriaService {
      *
      * @param categoria Categoria
      */
-    public Long saveCategoria(Categoria categoria) {
+    public Long saveOrUpdateCategory(Categoria categoria) {
         categoriaRepository.save(categoria);
         log.info("Categoria " + categoria.getCategoryName() + " creada...");
         return categoria.getId();

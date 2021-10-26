@@ -35,15 +35,15 @@ public class CategoriaController {
     }
 
     /**
-     * Método que guarda y modifica una categoria
+     * Método que guarda o modifica una categoria
      *
      * @param categoria
      * @return Objeto creado
      */
     @PostMapping(value = "/categorias", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Long saveCategory(@RequestBody Categoria categoria) {
-      return  categoriaService.saveCategoria(categoria);
+    public Long saveOrUpdateCategory(@RequestBody Categoria categoria) {
+      return  categoriaService.saveOrUpdateCategory(categoria);
 
     }
 
