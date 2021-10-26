@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+
 /**
  * Clase que representa una tabla Bien de la base de datos
  *
@@ -30,4 +32,9 @@ public class Bien {
     @ManyToOne
     @JoinColumn(name = "categoriaId")
     private Categoria categoria;
+
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "bien", fetch = FetchType.LAZY)
+    private List<History> history;
 }

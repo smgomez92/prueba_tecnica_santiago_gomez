@@ -3,14 +3,19 @@ package com.testBackend.pruebaTecnica.services;
 import com.testBackend.pruebaTecnica.dto.BienDto;
 import com.testBackend.pruebaTecnica.model.Bien;
 import com.testBackend.pruebaTecnica.model.Categoria;
+import com.testBackend.pruebaTecnica.model.History;
 import com.testBackend.pruebaTecnica.repository.BienesRepository;
 import com.testBackend.pruebaTecnica.repository.CategoriaRepository;
+import com.testBackend.pruebaTecnica.repository.HistoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Clase que realiza la lógica del negocio para los Bienes
@@ -22,6 +27,8 @@ import java.util.List;
 public class BienService {
     @Autowired
     BienesRepository bienesRepository;
+    @Autowired
+    HistoryRepository historyRepository;
 
     /**
      * Método que guarda un Bien en la base de datos
@@ -31,6 +38,7 @@ public class BienService {
     public Long saveBien(BienDto bienDto) {
         Bien bien = createBien(bienDto);
         bienesRepository.save(bien);
+        saveHistory(bien);
         log.info("Bien Guardada.");
         return bien.getId();
     }
@@ -77,8 +85,10 @@ public class BienService {
      *
      * @return Lista de bienes
      */
-    public List<Bien> getBienes() {
-        return bienesRepository.findAll();
+    public List<BienDto> getBienes() {
+      return  bienesRepository.findAll().stream().map(bien -> new BienDto(bien.getType(), bien.isActive(), bien.getName(), bien.getCategoria().getId())
+        ).collect(Collectors.toList());
+
     }
 
     /**
@@ -91,6 +101,17 @@ public class BienService {
             this.saveBien(bien);
             log.info("Guardando " + bien.getName());
         });
+
+    }
+
+    private void saveHistory(Bien bien) {
+        History history = new History();
+        history.setBien(bien);
+        history.setObservation("Cambios " + LocalDate.now().toString());
+        history.setModificationDate(LocalDateTime.now());
+        historyRepository.save(history);
+        log.info("Historial guardado....");
+
 
     }
 
@@ -107,6 +128,7 @@ public class BienService {
             }
             bien.setActive(false);
             bienesRepository.save(bien);
+            saveHistory(bien);
 
         });
 

@@ -44,43 +44,27 @@ class BienControllerTest {
 
     @Test
     public void shouldReturnBienList() throws Exception {
-        List<Bien> bienes = getBienesList();
+        List<BienDto> bienes = getBienesList();
         when(bienService.getBienes()).thenReturn(bienes);
 
         mockMvc.perform(get("/api/bienes")).andDo(print());
 
     }
 
-    private List<Bien> getBienesList() {
-        List<Bien> bienes = new ArrayList<>();
-        Bien bien1 = new Bien();
-        bien1.setId(1L);
-        bien1.setActive(true);
-        bien1.setType("Tipo de bien");
-        bien1.setName("Nombre Bien");
-        Categoria categoria1 = new Categoria();
-        categoria1.setId(1L);
-        categoria1.setCategoryName("CAT-1");
-        categoria1.setCategoryDescripcion("Descripcion cat 1");
-        bien1.setCategoria(categoria1);
+    private List<BienDto> getBienesList() {
+        List<BienDto> bienes = new ArrayList<>();
+        BienDto bien1 = new BienDto("Edificio", true, "Casa", 1L);
+
+
         bienes.add(bien1);
-        Bien bien2 = new Bien();
-        bien2.setId(1L);
-        bien2.setActive(true);
-        bien2.setType("Tipo de bien");
-        bien2.setName("Nombre Bien");
-        Categoria categoria2 = new Categoria();
-        categoria2.setId(1L);
-        categoria2.setCategoryName("CAT-2");
-        categoria2.setCategoryDescripcion("Descripcion cat 2");
-        bien1.setCategoria(categoria2);
+        BienDto bien2 = new BienDto("Edificio", true, "Casa", 1L);
         bienes.add(bien2);
         return bienes;
     }
 
     @Test
     public void shouldCreateABien() throws Exception {
-        BienDto bienDto = new BienDto();
+        BienDto bienDto = new BienDto("Vehiculo",true,"Camioneta",2L);
         bienDto.setType("Vehiculo");
         bienDto.setName("Camioneta");
         bienDto.setActivo(true);

@@ -39,7 +39,7 @@ public class BienController {
      */
     @GetMapping(value = "/bienes")
     @ResponseStatus(HttpStatus.OK)
-    public List<Bien> getBienes() {
+    public List<BienDto> getBienes() {
         return bienService.getBienes();
     }
 
