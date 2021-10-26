@@ -49,11 +49,6 @@ class ApplicationTests {
         mock.perform(get("/api/categorias/statistics")).andDo(print());
     }
 
-    /*@Test
-    @Order(3)
-    void testActualizacion() throws Exception {
-        mock.perform(put("/curso").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"nombre\": \"Angular 10 \", \"duracion\":80,\"horario\":\"noche\"}")).andDo(print());
-    }*/
+
 
 }
